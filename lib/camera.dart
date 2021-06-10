@@ -59,6 +59,7 @@ String serializeResolutionPreset(ResolutionPreset resolutionPreset) {
     case ResolutionPreset.low:
       return 'low';
   }
+  // ignore: dead_code
   throw ArgumentError('Unknown ResolutionPreset value');
 }
 
@@ -80,7 +81,8 @@ CameraLensDirection _parseCameraLensDirection(String? string) {
 Future<List<CameraDescription>> availableCameras() async {
   try {
     final List<Map<dynamic, dynamic>> cameras = await (_channel
-        .invokeListMethod<Map<dynamic, dynamic>>('availableCameras') as FutureOr<List<Map<dynamic, dynamic>>>);
+            .invokeListMethod<Map<dynamic, dynamic>>('availableCameras')
+        as FutureOr<List<Map<dynamic, dynamic>>>);
     return cameras.map((Map<dynamic, dynamic> camera) {
       return CameraDescription(
         name: camera['name'],
@@ -331,6 +333,7 @@ class CameraController extends ValueNotifier<CameraValue> {
     this.description,
     this.resolutionPreset, {
     this.enableAudio = true,
+    // ignore: avoid_init_to_null
     this.streamingPreset = null,
     this.androidUseOpenGL = false,
   }) : super(const CameraValue.uninitialized());
@@ -345,6 +348,7 @@ class CameraController extends ValueNotifier<CameraValue> {
   int? _textureId;
   bool _isDisposed = false;
   StreamSubscription<dynamic>? _eventSubscription;
+  // ignore: cancel_subscriptions
   StreamSubscription<dynamic>? _imageStreamSubscription;
   Completer<void>? _creatingCompleter;
   final bool androidUseOpenGL;
@@ -367,7 +371,7 @@ class CameraController extends ValueNotifier<CameraValue> {
           'streamingPreset':
               serializeResolutionPreset(streamingPreset ?? resolutionPreset),
           'enableAudio': enableAudio,
-          'enableAndroidOpenGL': androidUseOpenGL ?? false
+          'enableAndroidOpenGL': androidUseOpenGL
         },
       ) as FutureOr<Map<String, dynamic>>);
       _textureId = reply['textureId'];
@@ -605,8 +609,8 @@ class CameraController extends ValueNotifier<CameraValue> {
     }
 
     try {
-      var data = await (_channel
-          .invokeMapMethod<String, dynamic>('getStreamStatistics') as FutureOr<Map<String, dynamic>>);
+      var data = await (_channel.invokeMapMethod<String, dynamic>(
+          'getStreamStatistics') as FutureOr<Map<String, dynamic>>);
       return StreamStatistics(
         sentAudioFrames: data["sentAudioFrames"],
         sentVideoFrames: data["sentVideoFrames"],

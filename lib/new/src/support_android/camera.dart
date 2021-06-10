@@ -78,7 +78,7 @@ class Camera with NativeMethodCallHandler {
 
     CameraChannel.channel.invokeMethod<void>(
       'Camera#previewTexture',
-      <String, dynamic>{'handle': handle, 'nativeTexture': texture?.asMap()},
+      <String, dynamic>{'handle': handle, 'nativeTexture': texture.asMap()},
     );
   }
 

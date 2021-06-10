@@ -38,8 +38,9 @@ class Plane {
   final int? width;
 }
 
+// ignore: todo
 // TODO:(bmparr) Turn [ImageFormatGroup] to a class with int values.
-/// Group of image formats that are comparable across Android and iOS platforms.
+// Group of image formats that are comparable across Android and iOS platforms.
 enum ImageFormatGroup {
   /// The image format does not fit into any specific group.
   unknown,
